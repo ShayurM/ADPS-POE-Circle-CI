@@ -3,7 +3,7 @@ version: 2.1
 executors:
   dotnet-executor:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:8.0  # Use .NET 8.0 SDK image
+      - image: mcr.microsoft.com/dotnet/sdk:8.0  
     working_directory: ~/repo
 
 jobs:
@@ -18,10 +18,10 @@ jobs:
             apt-get install -y nodejs
       - run:
           name: Install Dependencies
-          command: dotnet restore CustomerPortalAPI.Server/CustomerPortalAPI.Server.csproj  # Specify the project file
+          command: dotnet restore CustomerPortalAPI.Server/CustomerPortalAPI.Server.csproj  
       - run:
           name: Build Project
-          command: dotnet build CustomerPortalAPI.Server/CustomerPortalAPI.Server.csproj  # Specify the project file
+          command: dotnet build CustomerPortalAPI.Server/CustomerPortalAPI.Server.csproj 
       - run:
           name: Install SonarScanner for .NET
           command: dotnet tool install --global dotnet-sonarscanner
