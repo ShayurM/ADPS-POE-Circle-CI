@@ -18,10 +18,10 @@ jobs:
             apt-get install -y nodejs
       - run:
           name: Install Dependencies
-          command: dotnet restore
+          command: dotnet restore CustomerPortalAPI.Server/CustomerPortalAPI.Server.csproj  # Specify the project file
       - run:
           name: Build Project
-          command: dotnet build
+          command: dotnet build CustomerPortalAPI.Server/CustomerPortalAPI.Server.csproj  # Specify the project file
       - run:
           name: Install SonarScanner for .NET
           command: dotnet tool install --global dotnet-sonarscanner
@@ -29,8 +29,8 @@ jobs:
           name: Run SonarQube Scan
           command: |
             export PATH="$PATH:/root/.dotnet/tools"
-            dotnet-sonarscanner begin /k:"ShayurM_ADPS-POE-Circle-CI" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
-            dotnet build
+            dotnet-sonarscanner begin /k:"ShayurM_ADPS-POE-Circle-CI" /o:"shayurm" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
+            dotnet build CustomerPortalAPI.Server/CustomerPortalAPI.Server.csproj  # Specify the project file
             dotnet-sonarscanner end /d:sonar.login="$SONAR_TOKEN"
 
 workflows:
