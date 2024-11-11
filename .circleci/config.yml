@@ -7,7 +7,6 @@ executors:
     working_directory: ~/repo
 
 jobs:
-
   sonar_scan:
     executor: dotnet-executor
     steps:
@@ -30,7 +29,7 @@ jobs:
           name: Run SonarQube Scan
           command: |
             export PATH="$PATH:/root/.dotnet/tools"
-            dotnet-sonarscanner begin /k:"ShayurM_ADPS-POE-Circle-CI" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
+            dotnet-sonarscanner begin /k:"ShayurM_ADPS-POE-Circle-CI" /o:"shayurm" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
             dotnet build
             dotnet-sonarscanner end /d:sonar.login="$SONAR_TOKEN"
 
