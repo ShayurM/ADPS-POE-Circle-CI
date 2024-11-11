@@ -3,7 +3,7 @@ version: 2.1
 executors:
   dotnet-executor:
     docker:
-      - image: circleci/node:14  
+      - image: mcr.microsoft.com/dotnet/sdk:6.0  # Ensure you use a valid .NET SDK image
     working_directory: ~/repo
 
 jobs:
@@ -11,6 +11,11 @@ jobs:
     executor: dotnet-executor
     steps:
       - checkout
+      - run:
+          name: Install .NET SDK (if missing)
+          command: |
+            curl -sSL https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh | bash /dev/stdin
+            export PATH=$PATH:/root/.dotnet
       - run:
           name: Install Dependencies
           command: dotnet restore
