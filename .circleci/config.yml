@@ -12,10 +12,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install .NET SDK (if missing)
+          name: Install Node.js
           command: |
-            curl -sSL https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh | bash /dev/stdin
-            export PATH=$PATH:/root/.dotnet
+            curl -sL https://deb.nodesource.com/setup_18.x | bash -
+            apt-get install -y nodejs
       - run:
           name: Install Dependencies
           command: dotnet restore
