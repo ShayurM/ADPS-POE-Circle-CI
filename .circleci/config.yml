@@ -3,7 +3,7 @@ version: 2.1
 executors:
   dotnet-executor:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:6.0  # Change if using a different version
+      - image: circleci/node:14  
     working_directory: ~/repo
 
 jobs:
