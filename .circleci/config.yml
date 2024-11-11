@@ -1,0 +1,35 @@
+version: 2.1
+
+executors:
+  dotnet-executor:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:6.0  # Change if using a different version
+    working_directory: ~/repo
+
+jobs:
+  sonar_scan:
+    executor: dotnet-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: dotnet restore
+      - run:
+          name: Build Project
+          command: dotnet build
+      - run:
+          name: Install SonarScanner for .NET
+          command: dotnet tool install --global dotnet-sonarscanner
+      - run:
+          name: Run SonarQube Scan
+          command: |
+            export PATH="$PATH:/root/.dotnet/tools"
+            dotnet-sonarscanner begin /k:"ShayurM_ADPS-POE-Circle-CI" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
+            dotnet build
+            dotnet-sonarscanner end /d:sonar.login="$SONAR_TOKEN"
+
+workflows:
+  version: 2
+  sonar_workflow:
+    jobs:
+      - sonar_scan
